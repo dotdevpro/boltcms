@@ -13,6 +13,7 @@ use Bolt\Entity\Field;
 use Bolt\Entity\Field\Excerptable;
 use Bolt\Entity\Field\ImageField;
 use Bolt\Entity\Field\ImagelistField;
+use Bolt\Entity\Field\SelectField;
 use Bolt\Entity\Field\TemplateselectField;
 use Bolt\Entity\Taxonomy;
 use Bolt\Enum\Statuses;
@@ -296,7 +297,7 @@ class ContentExtension extends AbstractExtension
             }
         }
 
-        $specialChars = ['.', ',', '!', '?'];
+        $specialChars = ['.', ',', '!', '?', '>'];
         $excerpt = array_reduce($excerptParts, function (string $excerpt, string $part) use ($specialChars): string {
             if (in_array(mb_substr($part, -1), $specialChars, true) === false) {
                 // add period at end of string if it doesn't have sentence end
@@ -561,7 +562,11 @@ class ContentExtension extends AbstractExtension
 
     public function selectOptions(Field $field): Collection
     {
-        $values = $field->getDefinition()->get('values');
+        if (! $field instanceof SelectField) {
+            return collect([]);
+        }
+
+        $values = $field->getOptions();
 
         if (is_iterable($values)) {
             return $this->selectOptionsArray($field);
@@ -572,7 +577,11 @@ class ContentExtension extends AbstractExtension
 
     private function selectOptionsArray(Field $field): Collection
     {
-        $values = $field->getDefinition()->get('values');
+        if (! $field instanceof SelectField) {
+            return collect([]);
+        }
+
+        $values = $field->getOptions();
         $currentValues = $field->getValue();
 
         $options = [];
