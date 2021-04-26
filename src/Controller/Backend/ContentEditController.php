@@ -74,6 +74,8 @@ class ContentEditController extends TwigAwareController implements BackendZoneIn
     /** @var string */
     protected $defaultLocale;
 
+    protected $contentValidator;
+
     public function __construct(
         TaxonomyRepository $taxonomyRepository,
         RelationRepository $relationRepository,
@@ -84,6 +86,7 @@ class ContentEditController extends TwigAwareController implements BackendZoneIn
         ContentFillListener $contentFillListener,
         CsrfTokenManagerInterface $csrfTokenManager,
         EventDispatcherInterface $dispatcher,
+        ContentValidatorInterface $contentValidator,
         string $defaultLocale
     ) {
         $this->taxonomyRepository = $taxonomyRepository;
@@ -95,6 +98,7 @@ class ContentEditController extends TwigAwareController implements BackendZoneIn
         $this->contentFillListener = $contentFillListener;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->dispatcher = $dispatcher;
+        $this->contentValidator = $contentValidator;
         $this->defaultLocale = $defaultLocale;
     }
 
@@ -116,7 +120,7 @@ class ContentEditController extends TwigAwareController implements BackendZoneIn
         $this->contentFillListener->fillContent($content);
 
         if ($this->request->getMethod() === 'POST') {
-            return $this->save($content);
+            return $this->save($content, $this->contentValidator);
         }
 
         return $this->edit($content);
