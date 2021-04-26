@@ -116,8 +116,6 @@ class ContentEditController extends TwigAwareController implements BackendZoneIn
         $this->contentFillListener->fillContent($content);
 
         if ($this->request->getMethod() === 'POST') {
-            // TODO: Fix
-            //return $this->save($content, $this->contentValidator);
             return $this->save($content);
         }
 
@@ -228,6 +226,8 @@ class ContentEditController extends TwigAwareController implements BackendZoneIn
                 $this->addFlash('danger', 'content.validation_errors');
 
                 // TODO: FIX
+                $this->request->attributes->set('_contentEditInvalid', true);
+                // TODO: PR
                 $event = new ContentEvent($content);
                 $this->dispatcher->dispatch($event, ContentEvent::ON_EDIT);
 

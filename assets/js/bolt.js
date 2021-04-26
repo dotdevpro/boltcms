@@ -12,6 +12,3 @@ import './codemirror';
 import './filters';
 import './app';
 import '../scss/bolt.scss';
-
-// Dotdev
-import './dotdev';
