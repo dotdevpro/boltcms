@@ -6,3 +6,5 @@ import 'selectize';
 import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
+
+global.$ = global.jQuery = $;
