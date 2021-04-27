@@ -33,3 +33,6 @@ $('*[data-confirmation]').on('click', function() {
         return false;
     }
 });
+
+window.bootbox = bootbox;
+global.bootbox = bootbox;
