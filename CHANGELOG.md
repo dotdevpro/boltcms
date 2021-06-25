@@ -1,6 +1,38 @@
 Changelog
 =========
 
+## 4.1.22
+
+Released: 2021-06-18
+
+### 🛠️ Miscellaneous
+
+- [security] Don't allow `symfony/security-http` 5.3.0 and 5.3.1 (bobdenotter, [#2640](https://github.com/bolt/core/pull/2640))
+- Add `inferred_slug` values to parsed ContentType, if applicable (bobdenotter, [#2636](https://github.com/bolt/core/pull/2636))
+- Pass around `BaseExtension` instead of string in `ExtensionsConfigureCommand` (bobdenotter, [#2628](https://github.com/bolt/core/pull/2628))
+
+### 🤖 Tests
+
+- Add cypress tests (I-Valchev, [#2625](https://github.com/bolt/core/pull/2625))
+
+
+## 4.1.21
+
+Released: 2021-06-11
+
+### 🐛 Bug fixes
+
+- Fix `maximum_listing_select` in `config.yaml` (I-Valchev, [#2619](https://github.com/bolt/core/pull/2619))
+- `extensions:configure` accepts both `.yaml` and `.yml` for config, routes and services in extensions (I-Valchev, [#2618](https://github.com/bolt/core/pull/2618))
+- Fix `|filter` and `|order` chaining returning no results (I-Valchev, [#2603](https://github.com/bolt/core/pull/2603))
+
+### ⚙️ Code Quality / Developer Experience
+
+- Add restriction for (global) Composer 2 to `composer.json` (bobdenotter, [#2614](https://github.com/bolt/core/pull/2614))
+- Fix error in custom code producing seemingly unrelated message. Catch `LoaderLoadException` instead of `Throwable` (bobdenotter, [#2623](https://github.com/bolt/core/pull/2623))
+- Pin Chromedriver to version 90.x  (bobdenotter, [#2610](https://github.com/bolt/core/pull/2610))
+
+
 ## 4.1.20
 
 Released: 2021-05-31
