@@ -460,6 +460,11 @@ class ContentEditController extends TwigAwareController implements BackendZoneIn
         if (isset($formData['collections'])) {
             foreach ($formData['collections'] as $collectionName => $collectionItems) {
                 $collectionDefinition = $content->getDefinition()->get('fields')->get($collectionName);
+                // TODO: fix for nested fields
+                // https://github.com/dotdevio/dataformapp/issues/2
+                if (null === $collectionDefinition) {
+                    continue;
+                }
                 $orderArray = array_flip($collectionItems['order']);
 
                 $collection = $this->getFieldToUpdate($content, $collectionName, $collectionDefinition);
