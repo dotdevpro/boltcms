@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Bolt\Storage;
 
-use Bolt\Common\Arr;
 use Bolt\Configuration\Config;
 use Bolt\Configuration\Content\ContentType;
 use Bolt\Doctrine\JsonHelper;
+use Bolt\Entity\Field\NumberField;
+use Bolt\Entity\Field\SelectField;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\Query\Expr\Base;
@@ -189,25 +190,13 @@ class SelectQuery implements QueryInterface
      */
     public function setParameters(array $params): void
     {
-        // Change all params to lowercase, filter out empty ones
+        // Filter out empty parameters, ignoring it if 'like' statement is empty
         $this->params = array_filter(
-            Arr::mapRecursive($params, function ($param) {
-                // Do NOT cast checkboxes to a string.
-                if (is_bool($param)) {
-                    return $param;
-                }
-
-                // Do NOT cast numbers to a string. Fix for content selects.
-                if (is_numeric($param)) {
-                    return $param;
-                }
-
-                return mb_strtolower((string) $param, 'utf-8');
+            $params,
+            function ($a) {
+                return $a !== '%%';
             }
-        ), function ($param) {
-            // ignore parameter if like statement is empty
-            return $param !== '%%';
-        });
+        );
 
         $this->processFilters();
     }
@@ -609,8 +598,14 @@ class SelectQuery implements QueryInterface
 
     private function getRegularFieldLeftExpression(string $valueAlias, string $fieldName): string
     {
-        if ($this->utils->isNumericField($this, $fieldName) && $this->utils->hasCast()) {
+        if ($this->utils->isFieldType($this, $fieldName, NumberField::TYPE) && $this->utils->hasCast()) {
             return $this->utils->getNumericCastExpression($valueAlias);
+        }
+
+        if ($this->utils->isFieldType($this, $fieldName, SelectField::TYPE)) {
+            // Do not use JSON_EXTRACT for select fields, because then only the first
+            // item of the array is checked.
+            return $valueAlias;
         }
 
         // LOWER() added to query to enable case insensitive search of JSON  values. Used in conjunction with converting $params of setParameter() to lowercase.

@@ -1,6 +1,66 @@
 Changelog
 =========
 
+## 4.2.2
+
+Released: 2021-08-23
+
+### 🐛 Bug fixes
+
+- Fix `optionsLimit` hyphenation warning (I-Valchev, [#2789](https://github.com/bolt/core/pull/2789))
+- Lock `symfony/flex` to `1.13` for now (bobdenotter, [#2786](https://github.com/bolt/core/pull/2786))
+- Search now also finds words with special characters, like `büßen` (bobdenotter, [#2767](https://github.com/bolt/core/pull/2767))
+- Workaround for constructor signature change in Symfony/Process (bobdenotter, [#2766](https://github.com/bolt/core/pull/2766))
+
+
+## 4.2.1
+
+Released: 2021-08-11
+
+### 🐛 Bug fixes
+
+- Use Symfony Process component instead of `passthru` (I-Valchev, [#2755](https://github.com/bolt/core/pull/2755))
+- `imagelist` and `filelist` fields can be emptied (I-Valchev, [#2743](https://github.com/bolt/core/pull/2743))
+- Throw 404 response when thumbnailing a missing image (I-Valchev, [#2742](https://github.com/bolt/core/pull/2742))
+- Fix `group: sidebar` conflicting with Bolt's sidebar (I-Valchev, [#2737](https://github.com/bolt/core/pull/2737))
+
+### 🛠️ Miscellaneous
+
+- Update webpack encore (nestordedios, [#2752](https://github.com/bolt/core/pull/2752))
+- Unlimited select field options (JTNMW, [#2750](https://github.com/bolt/core/pull/2750))
+
+
+## 4.2.0
+
+Released: 2021-07-27
+
+- Preparations for upgrading to Bolt 5
+- Add Composer scripts for tasks, when running Composer
+
+
+## 4.1.23
+
+Released: 2021-07-18
+
+### 🐛 Bug fixes
+
+- Don't lowercase values in queries, allow for booleans (bobdenotter, [#2686](https://github.com/bolt/core/pull/2686))
+- Fix incorrect error when uploading an allowed filetype, that isn't an image (bobdenotter, [#2663](https://github.com/bolt/core/pull/2663))
+- Allow whitespace in `orderby` in setcontent queries (bobdenotter, [#2712](https://github.com/bolt/core/pull/2712))
+
+### 🛠️ Miscellaneous
+
+- Replace `_` with space in Field labels (bobdenotter, [#2711](https://github.com/bolt/core/pull/2711))
+- Support Twig chain loaders if available (emodric, [#2660](https://github.com/bolt/core/pull/2660))
+- Use `localdate`, in preparation of this being the standard in 5.0 (bobdenotter, [#2656](https://github.com/bolt/core/pull/2656))
+- Remove unneeded line and fix rogue quote (bobdenotter, [#2650](https://github.com/bolt/core/pull/2650))
+
+### 🤖 Tests
+
+- Ignore two more PHPstan false positives (bobdenotter, [#2685](https://github.com/bolt/core/pull/2685))
+- Fix `If condition is always true` on new phpstan (I-Valchev, [#2675](https://github.com/bolt/core/pull/2675))
+
+
 ## 4.1.22
 
 Released: 2021-06-18
